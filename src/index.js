@@ -7,6 +7,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './redux/store';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 axios.defaults.baseURL = 'https://api.openweathermap.org/data/2.5';
 

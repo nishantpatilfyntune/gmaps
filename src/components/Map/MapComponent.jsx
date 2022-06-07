@@ -1,68 +1,48 @@
-// import React, { useEffect } from 'react';
-// import Map from 'react-mapbox-gl';
-// import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
-// import 'mapbox-gl/dist/mapbox-gl.css';
-// import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
-// const MapComponent = () => {
-//   const Map = ReactMapboxGl({
-//     accessToken: process.env.MAPBOX_ACCESS_TOKEN,
-//   });
-
-//   return (
-//     <Map
-//       style="mapbox://styles/mapbox/streets-v9"
-//       containerStyle={{
-//         height: '100vh',
-//         width: '100vw',
-//       }}
-//     >
-//       <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-//         <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
-//       </Layer>
-//     </Map>
-//   );
-// };
-
-// export default MapComponent;
-
 import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
-
+import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 mapboxgl.accessToken =
   'pk.eyJ1IjoiaWFtd2FzZWVtIiwiYSI6ImNsM3gxN2RxbjAwcGEzaXBqbjJvam0wbWwifQ.qoWy-EsS-Q5EWoemHwEk4Q';
 
 export default function MapComponent() {
-  const mapContainer = useRef(null);
-  const map = useRef(null);
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
-  const [zoom, setZoom] = useState(9);
+  const mapContainerRef = useRef(null);
 
+  const [lng, setLng] = useState(5);
+  const [lat, setLat] = useState(34);
+
+  // Initialize map when component mounts
   useEffect(() => {
-    if (map.current) return; // initialize map only once
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [lng, lat],
-      zoom: zoom,
+      zoom: 14,
     });
-  });
 
-  useEffect(() => {
-    if (!map.current) return; // wait for map to initialize
-    map.current.on('move', () => {
-      setLng(map.current.getCenter().lng.toFixed(4));
-      setLat(map.current.getCenter().lat.toFixed(4));
-      setZoom(map.current.getZoom().toFixed(2));
+    // Add navigation control (the +/- zoom buttons)
+    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+    var directions = new MapboxDirections({
+      accessToken: mapboxgl.accessToken,
+      unit: 'metric',
+      profile: 'mapbox/cycling',
     });
-  });
+
+    map.addControl(directions, 'top-left');
+
+    // map.on('move', () => {
+    //   setLng(map.getCenter().lng.toFixed(4));
+    //   setLat(map.getCenter().lat.toFixed(4));
+    //   setZoom(map.getZoom().toFixed(2));
+    // });
+
+    // // Clean up on unmount
+    // return () => map.remove();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
-      <div className="sidebar">
-        Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-      </div>
-      <div ref={mapContainer} className="map-container" />
+      <div className="map-container" ref={mapContainerRef} />
     </div>
   );
 }
