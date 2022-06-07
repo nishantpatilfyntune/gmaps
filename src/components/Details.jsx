@@ -57,7 +57,7 @@ export const Deatils = () => {
           gap={'30px'}
         >
           <Newbox>
-            <Box color={'#5e82f4'} p={'20px'} textAlign={'center'}>
+            <Box color={'#3b8231'} p={'20px'} textAlign={'center'}>
               <Flex justify={'end'}>
                 <Icon
                   onClick={handleSyncData}
@@ -93,7 +93,7 @@ export const Deatils = () => {
                 ].map((e, i) => (
                   <Text
                     key={i}
-                    color={'#5e82f4'}
+                    color={'#3b8231'}
                     fontWeight={500}
                     mt={'15px'}
                     fontSize={'18px'}
@@ -102,7 +102,7 @@ export const Deatils = () => {
                   </Text>
                 ))}
               </Box>
-              <Box borderRadius={'30px'} bg={'#5e82f4'} py={'10px'} pl={'15%'}>
+              <Box borderRadius={'30px'} bg={'#3b8231'} py={'10px'} pl={'15%'}>
                 <NewText>
                   {celsius(data.main.feels_like)}
                   <sup>o</sup> C

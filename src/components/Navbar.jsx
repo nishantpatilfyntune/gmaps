@@ -28,9 +28,6 @@ export const Navbar = () => {
     >
       <Center px={'10px'}>
         <Input
-          onKeyPress={({ key }) => {
-            key === 'Enter' ? handleChnage() : undefined;
-          }}
           onInput={(e) => {
             setCity(e.target.value);
           }}
@@ -44,16 +41,16 @@ export const Navbar = () => {
           onClick={handleChnage}
           borderRadius={'0px 15px 15px 0px'}
           color={'white'}
-          bg={'#5e82f4'}
-          _hover={{ bg: '5e82f4' }}
+          bg={'#3b8231'}
+          _hover={{ bg: '3b8231' }}
         >
           Search
         </Button>
       </Center>
       <Center px={'10px'}>
         <Button
-          bg={'#5e82f4'}
-          _hover={{ bg: '5e82f4' }}
+          bg={'#3b8231'}
+          _hover={{ bg: '3b8231' }}
           color={'white'}
           w={'100%'}
           borderRadius={'15px'}

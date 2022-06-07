@@ -39,6 +39,10 @@ const WeatherData = () => {
     dispatch(syncData(data.name, toast));
   };
 
+  // setInterval(() => {
+  //   speak({ text: `Your city name is ${data.name}` });
+  // }, 10000);
+
   return isLoading ? (
     <Loading />
   ) : isError ? (
@@ -56,7 +60,7 @@ const WeatherData = () => {
           gap={'30px'}
         >
           <Newbox>
-            <Box color={'#5e82f4'} p={'20px'} textAlign={'center'}>
+            <Box color={'#3b8231'} p={'20px'} textAlign={'center'}>
               <Flex justify={'end'}>
                 <Icon
                   onClick={handleSyncData}
@@ -70,6 +74,7 @@ const WeatherData = () => {
                   as={FaSyncAlt}
                 />
               </Flex>
+
               <Heading>{data.name}</Heading>
               <Heading fontSize={['100px', '120px', '120px', '100px', '120px']}>
                 {Math.round(data.main.temp - 273)}
@@ -92,7 +97,7 @@ const WeatherData = () => {
                 ].map((e, i) => (
                   <Text
                     key={i}
-                    color={'#5e82f4'}
+                    color={'#3b8231'}
                     fontWeight={500}
                     mt={'15px'}
                     fontSize={'18px'}
@@ -101,7 +106,7 @@ const WeatherData = () => {
                   </Text>
                 ))}
               </Box>
-              <Box borderRadius={'30px'} bg={'#5e82f4'} py={'10px'} pl={'15%'}>
+              <Box borderRadius={'30px'} bg={'#3b8231'} py={'10px'} pl={'15%'}>
                 <NewText>
                   {celsius(data.main.feels_like)}
                   <sup>o</sup> C
@@ -125,7 +130,7 @@ const WeatherData = () => {
             <Map city={data.name} />
           </Newbox> */}
         </Grid>
-
+        {/* 
         <Grid
           mt={'40px'}
           templateColumns={[
@@ -140,7 +145,7 @@ const WeatherData = () => {
           {forcastData.map((e, i) => (
             <Forcast key={i} data={e} />
           ))}
-        </Grid>
+        </Grid> */}
       </Box>
     </>
   );
