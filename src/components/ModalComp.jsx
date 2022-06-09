@@ -45,7 +45,7 @@ const ModalComp = ({ data }) => {
 
     speak({
       text: speechText,
-      voice: window.speechSynthesis.getVoices()[2],
+      voice: window.speechSynthesis.getVoices()[10],
     });
     onOpen();
   };
