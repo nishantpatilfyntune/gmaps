@@ -24,6 +24,8 @@ export const getWeatherByLocation = (toast) => (dispatch) => {
   const success = async (position) => {
     try {
       let { latitude, longitude } = position.coords;
+      // let latitude = 20.5579,
+      //   longitude = 74.5089;
       console.log(latitude, longitude);
       dispatch(getDataLoading());
       let weatherData = await axios.get(

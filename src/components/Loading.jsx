@@ -1,10 +1,12 @@
-import { Container, Image } from "@chakra-ui/react";
+import { Container, Image } from '@chakra-ui/react';
 
 export const Loading = () => {
-
-    return (
-        <Container mt={['200px', '100px']} >
-            <Image src='/images/loading.gif' />
-        </Container>
-    );
+  return (
+    <Container mt={['200px', '100px']}>
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
+    </Container>
+  );
 };
