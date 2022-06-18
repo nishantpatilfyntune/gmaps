@@ -2,9 +2,7 @@ import React from 'react';
 import {
   Box,
   Flex,
-  Grid,
   Heading,
-  Icon,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -12,30 +10,30 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { useNavigate } from 'react-router';
-import { FaPlay } from 'react-icons/fa';
+
 import styled from 'styled-components/macro';
 import { Newbox } from './SmallComponents';
-import { PlayButton } from './Weather/WeatherData';
-// import useSpeechSynthesis from './custom-hooks/useSpeechSynthesis';
-const ModalComp = ({ data }) => {
+
+import { useSelector } from 'react-redux';
+import { greetingMessage } from '../helpers/extraFunctions';
+const ModalComp = () => {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { speak } = useSpeechSynthesis();
+  const {
+    weatherData: data,
+    sourceInput,
+    destInput,
+  } = useSelector((state) => state.weatherInfo);
 
   const handleOpenClick = (e) => {
     e.preventDefault();
-    let currentHr = new Date().getHours();
-    let greeting =
-      currentHr < 12
-        ? 'Good Morning'
-        : currentHr >= 18
-        ? 'Good Evening'
-        : 'Good Afternoon';
+    onOpen();
+    let greeting = greetingMessage();
 
     let speechText = ` ${greeting}! Current temperature in ${
       data.name
@@ -47,12 +45,14 @@ const ModalComp = ({ data }) => {
       text: speechText,
       voice: window.speechSynthesis.getVoices()[10],
     });
-    onOpen();
   };
 
   const handleWeatherNavigate = () => {
-    navigate('/weather');
+    if (!Object.keys(sourceInput).length || !Object.keys(destInput).length) {
+      alert('Please select Source and Destination');
+    } else navigate('/weather');
   };
+
   return (
     <>
       <div
@@ -61,12 +61,12 @@ const ModalComp = ({ data }) => {
           gap: 5px;
         `}
       >
-        <NavButton onClick={handleOpenClick}>Click to open Modal</NavButton>
+        <NavButton onClick={handleOpenClick}>My Location Weather</NavButton>
         <NavButton
           title="Check Detailed Weather Forecast of Source and Destination"
           onClick={handleWeatherNavigate}
         >
-          Check
+          Check Details
         </NavButton>
       </div>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -88,9 +88,6 @@ const ModalComp = ({ data }) => {
                   <sup>o</sup>C
                 </Heading>
                 <Heading>{data?.weather[0].main}</Heading>
-                {/* <PlayButton onClick={handleListenClick}>
-                  <FaPlay />
-                </PlayButton> */}
               </Box>
             </Newbox>
           </ModalBody>

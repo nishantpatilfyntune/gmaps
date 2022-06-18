@@ -2,24 +2,19 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import ModalComp from '../ModalComp';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components/macro';
+import { useDispatch } from 'react-redux';
+import 'styled-components/macro';
 import { Heading } from '@chakra-ui/react';
-
+import { setSourceAndDestinationInputs } from '../weather.slice';
 mapboxgl.accessToken =
   'pk.eyJ1IjoiaWFtd2FzZWVtIiwiYSI6ImNsM3gxN2RxbjAwcGEzaXBqbjJvam0wbWwifQ.qoWy-EsS-Q5EWoemHwEk4Q';
 
 export default function MapComponent() {
   const dispatch = useDispatch();
   const mapContainerRef = useRef(null);
-  const {
-    isLoading,
-    weatherData: data,
-    forcastData,
-    isError,
-  } = useSelector((state) => state, shallowEqual);
-  const [lng, setLng] = useState(74.775751);
-  const [lat, setLat] = useState(20.878755);
+
+  const [lng, setLng] = useState(74.769205);
+  const [lat, setLat] = useState(20.869971);
 
   // Initialize map when component mounts
   useEffect(() => {
@@ -36,30 +31,18 @@ export default function MapComponent() {
     var directions = new MapboxDirections({
       accessToken: mapboxgl.accessToken,
       unit: 'metric',
-      profile: 'mapbox/cycling',
+      profile: 'mapbox/driving',
       interactive: false,
     });
     // console.log(directions);
     // directions.getOrigin((e) => console.log(e));
     map.addControl(directions, 'top-left');
     map.on('sourcedata', () => {
-      let a = directions.getOrigin();
-      let b = directions.getDestination();
-
-      console.log('okok', a, b);
+      let sourceInput = directions.getOrigin();
+      let destInput = directions.getDestination();
+      let payload = { sourceInput, destInput };
+      dispatch(setSourceAndDestinationInputs(payload));
     });
-    // directions.on('route', (e) => {
-
-    //   // console.log('nice');
-    //   // let routes = e.route;
-    //   // let or = routes.map(
-    //   //   (r) => r?.legs[0]?.steps[0].intersections[0].location[0]
-    //   // );
-
-    //   // // let tail = routes.map((r) => r.legs[0].steps.length);
-    //   // // let de = routes.map((r) => r);
-
-    // });
     map.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
@@ -89,8 +72,8 @@ export default function MapComponent() {
           align-items: center;
         `}
       >
-        <Heading>Navigation System</Heading>
-        <ModalComp data={data} />
+        <Heading>Map Navigator</Heading>
+        <ModalComp />
       </div>
 
       <div className="map-container" ref={mapContainerRef} />

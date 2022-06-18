@@ -5,17 +5,21 @@ import axios from 'axios';
 import App from './App';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { store } from './redux/store';
+import { store, persistor } from '../src/app/store';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
+import { PersistGate } from 'redux-persist/integration/react';
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 axios.defaults.baseURL = 'https://api.openweathermap.org/data/2.5';
 
 root.render(
   <React.StrictMode>
     <ChakraProvider>
       <ReduxProvider store={store}>
-        <App />
+        <PersistGate persistor={persistor}>
+          <App />
+        </PersistGate>
       </ReduxProvider>
     </ChakraProvider>
   </React.StrictMode>
