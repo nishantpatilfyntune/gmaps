@@ -72,7 +72,7 @@ export default function MapComponent() {
           align-items: center;
         `}
       >
-        <Heading>Map Navigator</Heading>
+        <Heading>Route Suggestion System</Heading>
         <ModalComp />
       </div>
 

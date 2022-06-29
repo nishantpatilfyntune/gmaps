@@ -132,12 +132,6 @@ const WeatherData = () => {
               </Box>
             </Grid>
           </Newbox>
-
-          {/* <Newbox>
-           
-
-            <Map city={data.name} />
-          </Newbox> */}
         </Grid>
         <Heading fontSize={'20px'} marginBottom={'15px'}>
           DESTINATION DATA
@@ -207,29 +201,7 @@ const WeatherData = () => {
               </Box>
             </Grid>
           </Newbox>
-
-          {/* <Newbox>
-           
-
-            <Map city={data.name} />
-          </Newbox> */}
         </Grid>
-        {/* 
-        <Grid
-          mt={'40px'}
-          templateColumns={[
-            'repeat(2, 1fr)',
-            'repeat(3, 1fr)',
-            'repeat(4, 1fr)',
-            'repeat(5, 1fr)',
-            'repeat(8, 1fr)',
-          ]}
-          gap={'20px'}
-        >
-          {forcastData.map((e, i) => (
-            <Forcast key={i} data={e} />
-          ))}
-        </Grid> */}
       </Box>
     </>
   );
